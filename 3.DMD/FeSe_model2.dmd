@@ -1,0 +1,30 @@
+# DMD input file
+nspin    = 0,1,2   # list of scanned spin states 
+norb     = 9       # number of orbitals in active space
+nelec    = 12      # number of electrons in active space (default = norb)
+nroots   = 30      # number of roots (eigenstates) calculated in CASCI
+dmrg     = yes     # DMRG calculation?
+dmread   = yes     # Read DMs from external file?
+unit    = eV       # unit (au,ha= hartree; ev,eV=electron-volt; cm=cm^-1)
+
+# Available parameters: E0,J,tσ,tσps,tπ,Ud,Up,Vpd,Vps,εs,εpσ,εdσ,εpπ,εdπ,εdδ
+params  = "E0,J,tσ,tπ,Ud,Up,Vpd"
+
+nsamples = 0       # Number of non-eigenstates generated from each eigenstate
+var      = 0       # Standard deviation of the CI coefficients of non-eigenstates
+
+save    = yes      # Save descriptors to files
+verbose = yes      # Include standard output besides output file
+debug   = no       # save noneigenstates in a file
+textbox = yes      # print parameters and results in the plot
+rel     = no       # work with relative energies
+
+#fixed_pnames  =   # string list of fixed parameters
+#fixed_pvalues =   # list of fixed parameter values in hartree
+#tr_tol  = 0.02    # Maximum relative error of 1-DM trace in each state 
+#cross   = False   # Generate non-diagonal terms of the non-eigenstates
+#le_window = 10.0  # low-energy window in electron-volts
+
+inputdir = input          # Path where input files (mf_{spin}.hdf40, mc, dm, etc. are located. 
+#inputname =              # name suffix, for example mf_{spin}{inputname}.hdf5, dm1_S{spin}{inputname}.dat 
+outputdir = output/model2 # Output files directory

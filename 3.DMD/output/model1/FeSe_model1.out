@@ -1,0 +1,61 @@
+ Density Matrix Downfolding from CASCI/DMRG
+               Version 0.9.9
+      Written by David W.O. de Sousa
+ The Pennsylvania State University, 2023
+
+ Program Parameters
+ ==================
+ Number of orbitals in active space:          9
+ Scanned spin states:                         [0, 1, 2]
+ Number of eigenstates per spin state:        30
+ Number of non-eigenstates per eigenstate:    0
+ Total number of points:                      90
+ Tolerance factor of descriptor assessment:   2.0%
+
+ Low-energy space energy window:              inf eV
+ Parameters in the effective model:           ['E0', 'J', 't', 'U', 'Vpd']
+
+ I/O Parameters
+ ==============
+ Read inputs from directory:                  input
+ Write outputs to directory:                  model1
+
+ Load Data
+ =========
+ Loading calculation files for spin = 0...
+ Reading descriptors from file...
+
+ Loading calculation files for spin = 1...
+ Reading descriptors from file...
+
+ Loading calculation files for spin = 2...
+ Reading descriptors from file...
+
+ Assess Data
+ ===========
+ Assessing descriptors...
+ Points rettained after assessment : 90
+
+ Correlation between parameters:
+   E0  vs. J   : R^2 = nan
+   E0  vs. t   : R^2 = nan
+   E0  vs. U   : R^2 = nan
+   E0  vs. Vpd : R^2 = nan
+   J   vs. t   : R^2 = 0.108618
+   J   vs. U   : R^2 = 0.643765
+   J   vs. Vpd : R^2 = 0.000487
+   t   vs. U   : R^2 = 0.045262
+   t   vs. Vpd : R^2 = 0.013020
+   U   vs. Vpd : R^2 = 0.001961
+
+ DMD Results
+ ===========
+ ['E0', 'J', 't', 'U', 'Vpd']  = [-9.96385140e+04 -1.79864273e+00  5.28830245e-01  5.75843190e-01
+ -7.10246024e-01] eV
+
+ residue = [0.14493822] eV
+ dE_max  = 0.5892793325191983 eV
+ dE_rms  = 0.2093368286124858 eV
+ R^2     = 0.9647684657487775
+
+ Total calculation time: 0.0 seconds 

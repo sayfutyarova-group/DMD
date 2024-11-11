@@ -1,0 +1,158 @@
+ Density Matrix Downfolding from CASCI/DMRG
+               Version 1.0
+      Written by David W.O. de Sousa
+ The Pennsylvania State University, 2023
+
+ Program Parameters
+ ==================
+ Number of orbitals in active space:          9
+ Scanned spin states:                         [0, 1, 2]
+ Number of eigenstates per spin state:        30
+ Number of non-eigenstates per eigenstate:    0
+ Total number of points:                      90
+ Tolerance factor of descriptor assessment:   2.0%
+
+ Low-energy space energy window:              inf eV
+ Parameters in the effective model:           ['E0', 'J', 'tσ', 'tσps', 'tπ', 'Ud', 'Up', 'Vpd', 'Vps', 'εs', 'εpσ', 'εdσ', 'εpπ', 'εdπ', 'εdδ']
+
+ I/O Parameters
+ ==============
+ Read inputs from directory:                  input
+ Write outputs to directory:                  model4
+
+ Load Data
+ =========
+ Loading calculation files for spin = 0...
+ Reading descriptors from file...
+
+ Loading calculation files for spin = 1...
+ Reading descriptors from file...
+
+ Loading calculation files for spin = 2...
+ Reading descriptors from file...
+
+ Assess Data
+ ===========
+ Assessing descriptors...
+ Points rettained after assessment : 90
+
+ Correlation between parameters:
+   E0  vs. J   : R^2 = nan
+   E0  vs. tσ  : R^2 = nan
+   E0  vs. tσps : R^2 = nan
+   E0  vs. tπ  : R^2 = nan
+   E0  vs. Ud  : R^2 = nan
+   E0  vs. Up  : R^2 = nan
+   E0  vs. Vpd : R^2 = nan
+   E0  vs. Vps : R^2 = nan
+   E0  vs. εs  : R^2 = nan
+   E0  vs. εpσ : R^2 = nan
+   E0  vs. εdσ : R^2 = nan
+   E0  vs. εpπ : R^2 = nan
+   E0  vs. εdπ : R^2 = nan
+   E0  vs. εdδ : R^2 = nan
+   J   vs. tσ  : R^2 = 0.105951
+   J   vs. tσps : R^2 = 0.112169
+   J   vs. tπ  : R^2 = 0.179568
+   J   vs. Ud  : R^2 = 0.709694
+   J   vs. Up  : R^2 = 0.128860
+   J   vs. Vpd : R^2 = 0.000487
+   J   vs. Vps : R^2 = 0.040167
+   J   vs. εs  : R^2 = 0.015376
+   J   vs. εpσ : R^2 = 0.042180
+   J   vs. εdσ : R^2 = 0.008545
+   J   vs. εpπ : R^2 = 0.076111
+   J   vs. εdπ : R^2 = 0.044757
+   J   vs. εdδ : R^2 = 0.149248
+   tσ  vs. tσps : R^2 = 0.004127
+   tσ  vs. tπ  : R^2 = 0.007653
+   tσ  vs. Ud  : R^2 = 0.152798
+   tσ  vs. Up  : R^2 = 0.005950
+   tσ  vs. Vpd : R^2 = 0.017377
+   tσ  vs. Vps : R^2 = 0.129522
+   tσ  vs. εs  : R^2 = 0.067869
+   tσ  vs. εpσ : R^2 = 0.058639
+   tσ  vs. εdσ : R^2 = 0.743330
+   tσ  vs. εpπ : R^2 = 0.025408
+   tσ  vs. εdπ : R^2 = 0.176853
+   tσ  vs. εdδ : R^2 = 0.114022
+   tσps vs. tπ  : R^2 = 0.019240
+   tσps vs. Ud  : R^2 = 0.108131
+   tσps vs. Up  : R^2 = 0.497811
+   tσps vs. Vpd : R^2 = 0.080169
+   tσps vs. Vps : R^2 = 0.053797
+   tσps vs. εs  : R^2 = 0.047813
+   tσps vs. εpσ : R^2 = 0.790586
+   tσps vs. εdσ : R^2 = 0.009899
+   tσps vs. εpπ : R^2 = 0.794369
+   tσps vs. εdπ : R^2 = 0.035257
+   tσps vs. εdδ : R^2 = 0.090607
+   tπ  vs. Ud  : R^2 = 0.172208
+   tπ  vs. Up  : R^2 = 0.023559
+   tπ  vs. Vpd : R^2 = 0.004056
+   tπ  vs. Vps : R^2 = 0.092273
+   tπ  vs. εs  : R^2 = 0.045466
+   tπ  vs. εpσ : R^2 = 0.006463
+   tπ  vs. εdσ : R^2 = 0.068934
+   tπ  vs. εpπ : R^2 = 0.020769
+   tπ  vs. εdπ : R^2 = 0.322864
+   tπ  vs. εdδ : R^2 = 0.237998
+   Ud  vs. Up  : R^2 = 0.101516
+   Ud  vs. Vpd : R^2 = 0.000304
+   Ud  vs. Vps : R^2 = 0.068222
+   Ud  vs. εs  : R^2 = 0.029409
+   Ud  vs. εpσ : R^2 = 0.016797
+   Ud  vs. εdσ : R^2 = 0.013156
+   Ud  vs. εpπ : R^2 = 0.042889
+   Ud  vs. εdπ : R^2 = 0.050990
+   Ud  vs. εdδ : R^2 = 0.183960
+   Up  vs. Vpd : R^2 = 0.671578
+   Up  vs. Vps : R^2 = 0.424427
+   Up  vs. εs  : R^2 = 0.519144
+   Up  vs. εpσ : R^2 = 0.476550
+   Up  vs. εdσ : R^2 = 0.001314
+   Up  vs. εpπ : R^2 = 0.728211
+   Up  vs. εdπ : R^2 = 0.025992
+   Up  vs. εdδ : R^2 = 0.042876
+   Vpd vs. Vps : R^2 = 0.834460
+   Vpd vs. εs  : R^2 = 0.948569
+   Vpd vs. εpσ : R^2 = 0.136285
+   Vpd vs. εdσ : R^2 = 0.008476
+   Vpd vs. εpπ : R^2 = 0.315875
+   Vpd vs. εdπ : R^2 = 0.000518
+   Vpd vs. εdδ : R^2 = 0.010194
+   Vps vs. εs  : R^2 = 0.958496
+   Vps vs. εpσ : R^2 = 0.190212
+   Vps vs. εdσ : R^2 = 0.043936
+   Vps vs. εpπ : R^2 = 0.295506
+   Vps vs. εdπ : R^2 = 0.001997
+   Vps vs. εdδ : R^2 = 0.102212
+   εs  vs. εpσ : R^2 = 0.135383
+   εs  vs. εdσ : R^2 = 0.025034
+   εs  vs. εpπ : R^2 = 0.272842
+   εs  vs. εdπ : R^2 = 0.000614
+   εs  vs. εdδ : R^2 = 0.055540
+   εpσ vs. εdσ : R^2 = 0.018382
+   εpσ vs. εpπ : R^2 = 0.930094
+   εpσ vs. εdπ : R^2 = 0.063270
+   εpσ vs. εdδ : R^2 = 0.017398
+   εdσ vs. εpπ : R^2 = 0.009127
+   εdσ vs. εdπ : R^2 = 0.318106
+   εdσ vs. εdδ : R^2 = 0.065444
+   εpπ vs. εdπ : R^2 = 0.065493
+   εpπ vs. εdδ : R^2 = 0.032542
+   εdπ vs. εdδ : R^2 = 0.419850
+
+ DMD Results
+ ===========
+ ['E0', 'J', 'tσ', 'tσps', 'tπ', 'Ud', 'Up', 'Vpd', 'Vps', 'εs', 'εpσ', 'εdσ', 'εpπ', 'εdπ', 'εdδ']  = [-3.99262668e+03 -1.82462048e+00 -9.30559359e-01 -2.91817717e-01
+  6.49762887e-01  4.53088637e-01 -5.08019690e+00  3.72312898e+00
+  1.05349252e+01 -8.00338347e+03 -7.99380547e+03 -7.97492556e+03
+ -7.98922266e+03 -7.97506872e+03 -7.97511426e+03] eV
+
+ residue = [] eV
+ dE_max  = 0.19833866206341708 eV
+ dE_rms  = 0.11676009418184773 eV
+ WARNING: possible redundancy in fit data. rank =14 but fit has 15 parameters.
+
+ Total calculation time: 0.0 seconds 

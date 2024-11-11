@@ -1,0 +1,72 @@
+ Density Matrix Downfolding from CASCI/DMRG
+               Version 1.0
+      Written by David W.O. de Sousa
+ The Pennsylvania State University, 2023
+
+ Program Parameters
+ ==================
+ Number of orbitals in active space:          9
+ Scanned spin states:                         [0, 1, 2]
+ Number of eigenstates per spin state:        30
+ Number of non-eigenstates per eigenstate:    0
+ Total number of points:                      90
+ Tolerance factor of descriptor assessment:   2.0%
+
+ Low-energy space energy window:              inf eV
+ Parameters in the effective model:           ['E0', 'J', 'tσ', 'tπ', 'Ud', 'Up', 'Vpd']
+
+ I/O Parameters
+ ==============
+ Read inputs from directory:                  input
+ Write outputs to directory:                  model2
+
+ Load Data
+ =========
+ Loading calculation files for spin = 0...
+ Reading descriptors from file...
+
+ Loading calculation files for spin = 1...
+ Reading descriptors from file...
+
+ Loading calculation files for spin = 2...
+ Reading descriptors from file...
+
+ Assess Data
+ ===========
+ Assessing descriptors...
+ Points rettained after assessment : 90
+
+ Correlation between parameters:
+   E0  vs. J   : R^2 = nan
+   E0  vs. tσ  : R^2 = nan
+   E0  vs. tπ  : R^2 = nan
+   E0  vs. Ud  : R^2 = nan
+   E0  vs. Up  : R^2 = nan
+   E0  vs. Vpd : R^2 = nan
+   J   vs. tσ  : R^2 = 0.105951
+   J   vs. tπ  : R^2 = 0.179568
+   J   vs. Ud  : R^2 = 0.709694
+   J   vs. Up  : R^2 = 0.128860
+   J   vs. Vpd : R^2 = 0.000487
+   tσ  vs. tπ  : R^2 = 0.007653
+   tσ  vs. Ud  : R^2 = 0.152798
+   tσ  vs. Up  : R^2 = 0.005950
+   tσ  vs. Vpd : R^2 = 0.017377
+   tπ  vs. Ud  : R^2 = 0.172208
+   tπ  vs. Up  : R^2 = 0.023559
+   tπ  vs. Vpd : R^2 = 0.004056
+   Ud  vs. Up  : R^2 = 0.101516
+   Ud  vs. Vpd : R^2 = 0.000304
+   Up  vs. Vpd : R^2 = 0.671578
+
+ DMD Results
+ ===========
+ ['E0', 'J', 'tσ', 'tπ', 'Ud', 'Up', 'Vpd']  = [-9.96250001e+04 -1.89905512e+00  2.72697040e-01  5.49384990e-01
+  5.91970313e-01  2.06076779e+00 -1.33405609e+00] eV
+
+ residue = [0.15838222] eV
+ dE_max  = 0.6224416986332769 eV
+ dE_rms  = 0.21883027065078775 eV
+ R^2     = 0.9615005016933343
+
+ Total calculation time: 0.0 seconds 
