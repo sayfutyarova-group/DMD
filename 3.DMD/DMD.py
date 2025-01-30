@@ -124,7 +124,7 @@ def noneig(v, size, ci0):
     cimod = cimod / np.sqrt( np.square(cimod).sum() ) # renormalize
     return cimod
 
-def _noneig_energy(mol, mf, mc, ci0):
+def old_noneig_energy(mol, mf, mc, ci0):
     '''Non-eigenstate CI energy calculator (inefficient).'''
     dm1, dm2 = pyscf.mcscf.addons.make_rdm12(mc, mo_coeff=mc.mo_coeff, 
     ci=ci0)
@@ -134,13 +134,19 @@ def _noneig_energy(mol, mf, mc, ci0):
         + 0.5*np.einsum('ijkl,ijkl', eri, dm2) + mol.energy_nuc()
     return E
 
-def noneig_energy(mc, ci0):
+def noneig_energy(mc, ci0, debug):
     '''Returns the energy of a CI state.'''
+    global outfile, verbose
     # DM in MO basis
+    if debug: pprint("   Entered function noneig_energy. Calculating active space DMs...", outfile, verbose)
     dm1, dm2 = mc.fcisolver.make_rdm12(ci0, mc.ncas, mc.nelecas)
+    if debug: pprint("   DMs calculated. Getting 1-electron effective H...", outfile, verbose)
     h1_eff, h0 = mc.get_h1eff()
+    if debug: pprint("   H1_eff calculated. Getting 2-electron effective H...", outfile, verbose)
     h2_eff = mc.get_h2eff()
+    if debug: pprint("   H2_eff calculated. Transforming H2eff matrix...", outfile, verbose)
     h2_eff = pyscf.ao2mo.restore(1, h2_eff, mc.ncas) # h2_eff is now 4-D
+    if debug: pprint("   H2_eff transformed. Calculating energy...", outfile, verbose)
     E = h0 + h1_eff.ravel().dot(dm1.ravel()) \
         + 0.5*h2_eff.ravel().dot(dm2.ravel())
     return E
@@ -252,6 +258,7 @@ def r2(x, y):
     return r**2
 
 def test_correlations(DATA, params_list, nparams):
+    global outfile, verbose
     pprint(f"Correlation between parameters:", outfile, verbose, skip=True)
     for x in range(nparams - 1):
         for y in range(x + 1, nparams):
@@ -283,6 +290,7 @@ def DMD_fit(Hij, A):
 
 def DMD_results(Hij, A, sol, params_list, nparams, outfile, outname,
                 textbox, unit, rel, dmrg, fixed_pnames, outputdir):
+    global verbose
     # Units treatment
     if unit.lower() in ['au','ha','hartree']:
         unitname = 'Ha'
@@ -379,7 +387,7 @@ def DMD_results(Hij, A, sol, params_list, nparams, outfile, outname,
     if verbose:
         plt.show()
 
-def print_header(INP, params_list, SIZE, outfile):
+def print_header(INP, params_list, SIZE, outfile, verbose):
     pprint( "Density Matrix Downfolding from CASCI/DMRG", outfile, verbose)
     pprint(f"              Version {__version__}", outfile, verbose)
     pprint( "     Written by David W.O. de Sousa", outfile, verbose)
@@ -403,26 +411,6 @@ def print_header(INP, params_list, SIZE, outfile):
             pprint(f"Suffix for input filenames:                  {INP['inputname']}", outfile, verbose)
         if INP['outputdir'] != '.':
             pprint(f"Write outputs to directory:                  {INP['outputdir']}", outfile, verbose)
-
-def print_mem(mem, outfile, verbose):
-    if mem < 1000:
-        pprint(f"Estimated memory required for 2-DMs: {mem} bytes",
-               outfile, verbose)
-    else:
-        mem /= 1024.
-        if mem < 1000:
-            pprint(f"Estimated memory required for 2-DMs: {mem:.1f} KB",
-                   outfile, verbose)
-        else:
-            mem /= 1024.
-            if mem < 1000:
-                pprint(f"Estimated memory required for 2-DMs: {mem:.1f} MB",
-                       outfile, verbose)
-            else:
-                mem /= 1024.
-                pprint(f"Estimated memory required for 2-DMs: {mem:.1f} GB",
-                       outfile, verbose)
-
 
 def pprint(text, outfile, verbose, margin=1, uline=False, skip=False):
     s=" "
@@ -499,6 +487,7 @@ def parse_input(inputfile):
     INPUTVARS['nsamples'] = parse(f, "nsamples", default=0, vtype='int')
     INPUTVARS['var'] = parse(f, "var", default="1.0", vtype='afloat')
     INPUTVARS['tr_tol'] = parse(f, "tr_tol", default=0.02, vtype='float')
+    INPUTVARS['memory'] = parse(f, "memory", default=0, vtype='int')
     
     INPUTVARS['save'] = parse(f, "save", default="false", vtype='bool')
     INPUTVARS['cross'] = parse(f, "cross", default="false", vtype='bool')
@@ -561,7 +550,7 @@ if __name__=='__main__':
     outfile = open(INP['outputdir'] + "/" + outname + ".out", 'w')
     verbose = INP['verbose']
 
-    print_header(INP, params_list, SIZE, outfile)
+    print_header(INP, params_list, SIZE, outfile, verbose)
 
     pprint("Load Data", outfile, verbose, uline=True, skip=True)
     HIJ   = np.zeros(SIZE)
@@ -575,22 +564,19 @@ if __name__=='__main__':
                outfile, verbose, skip=spin!=0)
         mol, mf, mc = load_state(f"S{spin}", norb, nelec, nroots,
                                  INP['inputdir'], INP['inputname'])
-        # Estimate maximum memory usage
-        if not INP['dmread']:
-            if idx1 == 0:
-                mem = 8*mf.mo_coeff.shape[0]**4
-                print_mem(mem, outfile, verbose)
-                mem_mb = int(mem/(1024.)**2)
-                mem_mb = 100*int(np.ceil(mem_mb/100)) # round up
-            if mem_mb > 4000:
-                mol.max_memory = mem_mb
-                mf.max_memory = mem_mb
-                mc.max_memory = mem_mb            
+
+        if INP['memory'] > 0: # ideally if memory > 4000
+                mem = INP['memory']
+                mol.max_memory = mem
+                mf.max_memory = mem
+                mc.max_memory = mem            
+                pprint(f"Memory set to {mem} MB.", outfile, verbose)
 
         if not INP['dmread']:
             pprint("Generating descriptors...", outfile, verbose)
         else:
             pprint("Reading descriptors from file...", outfile, verbose)
+
         Hij,A,trace = get_descriptors_eig(mc, nroots, params_list,
                                           nparams, spin, INP['dmread'],
                                           INP['inputdir'],
@@ -616,14 +602,15 @@ if __name__=='__main__':
                 print(" ERROR. Non-eigenstate sampling not supported for DM read mode.")
                 exit(1)
             for iroot in range(nroots):
-                print(" noneig ",iroot)
+                if INP['debug']: pprint(f" noneig {iroot}:", outfile, verbose)
                 noneigs = gen_noneigs(mc.ci[iroot], nsamples, INP['var'],
                                       INP['debug'], INP['outputdir'], ispin)
+
                 energies = np.zeros(nsamples)
-                
                 for sample in range(nsamples):
-                    print(" energy ",sample)
-                    energies[sample] = noneig_energy(mc, noneigs[sample])
+                    if INP['debug']: pprint(f"  energy {sample}:", outfile, verbose)
+                    energies[sample] = noneig_energy(mc, noneigs[sample], INP['debug'])
+                    if INP['debug']: pprint(f"  energy {sample} done.", outfile, verbose)
                     
                 Hij,A,trace = get_descriptors_noneig(mc, noneigs, params_list,
                                                      nparams, energies, spin,
@@ -634,7 +621,7 @@ if __name__=='__main__':
                 DATA[idx1:idx2] = A
                 TRACE[idx1:idx2] = trace
                 idx1 = idx2
-        ispin+=1
+        ispin += 1
 
     if INP['rel']:
         HIJ = HIJ - min(HIJ)
